@@ -1,26 +1,75 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --espresso: #3e2e27;
+  --cocoa: #6b4f42;
+  --mocha: #8e6f5d;
+  --caramel: #b58f7a;
+  --sand: #d1b7a4;
+  --latte: #e7d7ca;
+  --cream: #f4eae2;
+  --ivory: #fbf7f2;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-espresso: var(--espresso);
+  --color-cocoa: var(--cocoa);
+  --color-mocha: var(--mocha);
+  --color-caramel: var(--caramel);
+  --color-sand: var(--sand);
+  --color-latte: var(--latte);
+  --color-cream: var(--cream);
+  --color-ivory: var(--ivory);
+  --font-heading: var(--font-playfair);
+  --font-body: var(--font-lora);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--ivory);
+  color: var(--espresso);
+  font-family: var(--font-lora), serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-playfair), serif;
+  font-style: italic;
+  letter-spacing: -0.01em;
+}
+
+p,
+li,
+label,
+input::placeholder,
+textarea::placeholder {
+  font-style: italic;
+}
+
+::selection {
+  background: var(--caramel);
+  color: var(--ivory);
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--cream);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--sand);
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--mocha);
 }
