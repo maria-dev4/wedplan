@@ -1,5 +1,5 @@
 "use client";
-
+import UserMenu from "./UserMenu";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -67,19 +67,8 @@ export default function Navbar() {
           })}
         </ul>
 
-        <div className="hidden items-center gap-3 md:flex">
-          <Link
-            href="/login"
-            className="rounded-full px-5 py-2.5 text-[15px] font-medium text-cocoa transition hover:text-espresso"
-          >
-            Login
-          </Link>
-          <Link
-            href="/register"
-            className="rounded-full bg-espresso px-6 py-2.5 text-[15px] font-medium text-ivory shadow-lg shadow-espresso/20 transition hover:-translate-y-0.5 hover:bg-cocoa"
-          >
-            Get Started
-          </Link>
+        <div className="mt-4 flex justify-center">
+          <UserMenu />
         </div>
 
         <button
@@ -116,19 +105,8 @@ export default function Navbar() {
                 </li>
               ))}
             </ul>
-            <div className="mt-4 grid grid-cols-2 gap-3">
-              <Link
-                href="/login"
-                className="rounded-full border border-sand py-3 text-center font-medium text-espresso"
-              >
-                Login
-              </Link>
-              <Link
-                href="/register"
-                className="rounded-full bg-espresso py-3 text-center font-medium text-ivory"
-              >
-                Get Started
-              </Link>
+            <div className="hidden md:block">
+              <UserMenu />
             </div>
           </motion.div>
         )}
