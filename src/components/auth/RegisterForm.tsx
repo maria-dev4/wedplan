@@ -12,8 +12,15 @@ import {
   Mail,
   User,
 } from "lucide-react";
+import { toast } from "sonner";
 import { authClient } from "@/lib/auth-client";
+import { uploadImage } from "@/lib/upload";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import GoogleButton from "./GoogleButton";
+
+const inputClass =
+  "h-12 rounded-full border-sand bg-ivory pl-12 pr-4 text-espresso placeholder:text-mocha/70 focus-visible:border-caramel focus-visible:ring-caramel/20";
 
 export default function RegisterForm() {
   const router = useRouter();
@@ -22,43 +29,65 @@ export default function RegisterForm() {
   const [businessName, setBusinessName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [file, setFile] = useState<File | null>(null);
+  const [preview, setPreview] = useState("");
   const [show, setShow] = useState(false);
-  const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+
+  const handleFile = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const selected = e.target.files?.[0];
+    if (!selected) return;
+    setFile(selected);
+    setPreview(URL.createObjectURL(selected));
+  };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setError("");
 
-    if (password.length < 6) {
-      setError("Password must be at least 6 characters.");
+    if (!/^(?=.*[a-z])(?=.*[A-Z]).{6,}$/.test(password)) {
+      toast.error(
+        "Password needs 6+ characters with one uppercase and one lowercase letter.",
+      );
       return;
     }
     if (role === "vendor" && !businessName.trim()) {
-      setError("Please enter your business name.");
+      toast.error("Please enter your business name.");
       return;
     }
 
     setLoading(true);
+
+    let image: string | undefined;
+    if (file) {
+      try {
+        image = await uploadImage(file);
+      } catch (err) {
+        setLoading(false);
+        toast.error((err as Error).message);
+        return;
+      }
+    }
+
     const { error } = await authClient.signUp.email({
       name,
       email,
       password,
+      image,
       role,
       businessName: role === "vendor" ? businessName : undefined,
     });
+
     setLoading(false);
 
     if (error) {
-      setError(error.message || "Registration failed. Please try again.");
+      toast.error(error.message || "Registration failed. Please try again.");
       return;
     }
-    router.push("/");
+
+    toast.success("Account created successfully!");
+    router.push("/dashboard");
     router.refresh();
   };
-
-  const inputClass =
-    "w-full rounded-full border border-sand bg-ivory py-3.5 pl-12 pr-4 text-espresso outline-none transition placeholder:text-mocha/70 focus:border-caramel focus:ring-4 focus:ring-caramel/20";
 
   return (
     <div className="space-y-5">
@@ -70,7 +99,8 @@ export default function RegisterForm() {
             role === "customer" ? "bg-espresso text-ivory shadow" : "text-cocoa"
           }`}
         >
-          <Heart className="size-4" />I am a couple
+          <Heart className="size-4" />
+          Customer
         </button>
         <button
           type="button"
@@ -79,7 +109,8 @@ export default function RegisterForm() {
             role === "vendor" ? "bg-espresso text-ivory shadow" : "text-cocoa"
           }`}
         >
-          <Briefcase className="size-4" />I am a vendor
+          <Briefcase className="size-4" />
+          Vendor
         </button>
       </div>
 
@@ -92,9 +123,27 @@ export default function RegisterForm() {
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-4">
+        <div className="flex items-center gap-4">
+          <div className="flex size-16 shrink-0 items-center justify-center overflow-hidden rounded-full border border-sand bg-cream">
+            {preview ? (
+              <img
+                src={preview}
+                alt="Profile preview"
+                className="size-full object-cover"
+              />
+            ) : (
+              <User className="size-7 text-mocha" />
+            )}
+          </div>
+          <label className="cursor-pointer rounded-full border border-sand px-5 py-2.5 text-sm text-cocoa transition hover:bg-latte">
+            Profile photo (optional)
+            <input type="file" accept="image/*" hidden onChange={handleFile} />
+          </label>
+        </div>
+
         <div className="relative">
           <User className="absolute left-4 top-1/2 size-5 -translate-y-1/2 text-mocha" />
-          <input
+          <Input
             required
             value={name}
             onChange={(e) => setName(e.target.value)}
@@ -106,7 +155,7 @@ export default function RegisterForm() {
         {role === "vendor" && (
           <div className="relative">
             <Briefcase className="absolute left-4 top-1/2 size-5 -translate-y-1/2 text-mocha" />
-            <input
+            <Input
               value={businessName}
               onChange={(e) => setBusinessName(e.target.value)}
               placeholder="Business name"
@@ -117,7 +166,7 @@ export default function RegisterForm() {
 
         <div className="relative">
           <Mail className="absolute left-4 top-1/2 size-5 -translate-y-1/2 text-mocha" />
-          <input
+          <Input
             type="email"
             required
             value={email}
@@ -129,12 +178,12 @@ export default function RegisterForm() {
 
         <div className="relative">
           <Lock className="absolute left-4 top-1/2 size-5 -translate-y-1/2 text-mocha" />
-          <input
+          <Input
             type={show ? "text" : "password"}
             required
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            placeholder="Password (min 6 characters)"
+            placeholder="Password (6+ chars, Aa)"
             className={`${inputClass} pr-12`}
           />
           <button
@@ -147,20 +196,14 @@ export default function RegisterForm() {
           </button>
         </div>
 
-        {error && (
-          <p className="rounded-2xl bg-red-50 px-4 py-3 text-sm not-italic text-red-700">
-            {error}
-          </p>
-        )}
-
-        <button
+        <Button
           type="submit"
           disabled={loading}
-          className="flex w-full items-center justify-center gap-2 rounded-full bg-espresso py-3.5 font-medium text-ivory shadow-lg shadow-espresso/20 transition hover:bg-cocoa disabled:opacity-70"
+          className="h-12 w-full rounded-full bg-espresso text-base text-ivory shadow-lg shadow-espresso/20 hover:bg-cocoa"
         >
           {loading && <Loader2 className="size-5 animate-spin" />}
           Create account
-        </button>
+        </Button>
       </form>
     </div>
   );
