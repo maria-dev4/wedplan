@@ -1,6 +1,12 @@
 import Link from "next/link";
 import { Heart, Mail, MapPin, Phone } from "lucide-react";
 
+const socials = [
+  { label: "Facebook", href: "https://facebook.com" },
+  { label: "Instagram", href: "https://instagram.com" },
+  { label: "YouTube", href: "https://youtube.com" },
+];
+
 const quickLinks = [
   { href: "/", label: "Home" },
   { href: "/services", label: "Services" },
@@ -31,6 +37,19 @@ export default function Footer() {
             From the first idea to the last dance, we help couples find trusted
             vendors and plan a day worth remembering.
           </p>
+          <div className="mt-6 flex flex-wrap gap-3">
+            {socials.map((item) => (
+              <a
+                key={item.label}
+                href={item.href}
+                target="_blank"
+                rel="noreferrer"
+                className="rounded-full border border-white/20 px-4 py-2 text-sm text-sand transition hover:bg-ivory hover:text-espresso"
+              >
+                {item.label}
+              </a>
+            ))}
+          </div>
         </div>
 
         <div>
