@@ -1,7 +1,7 @@
 "use client";
-
+import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
-import { useRouter } from "next/navigation";
+
 import { Eye, EyeOff, Loader2, Lock, Mail } from "lucide-react";
 import { toast } from "sonner";
 import { authClient } from "@/lib/auth-client";
@@ -14,6 +14,8 @@ const inputClass =
 
 export default function LoginForm() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const redirectTo = searchParams.get("redirect");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [show, setShow] = useState(false);
@@ -43,7 +45,9 @@ export default function LoginForm() {
 
     setLoading(false);
     toast.success("Welcome back!");
-    router.push("/dashboard");
+    router.push(
+      redirectTo && redirectTo.startsWith("/") ? redirectTo : "/dashboard",
+    );
     router.refresh();
   };
 
