@@ -3,30 +3,47 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Eye, EyeOff, Loader2, Lock, Mail } from "lucide-react";
+import { toast } from "sonner";
 import { authClient } from "@/lib/auth-client";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import GoogleButton from "./GoogleButton";
+
+const inputClass =
+  "h-12 rounded-full border-sand bg-ivory pl-12 pr-4 text-espresso placeholder:text-mocha/70 focus-visible:border-caramel focus-visible:ring-caramel/20";
 
 export default function LoginForm() {
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [show, setShow] = useState(false);
-  const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setError("");
     setLoading(true);
 
     const { error } = await authClient.signIn.email({ email, password });
 
-    setLoading(false);
     if (error) {
-      setError(error.message || "Login failed. Please check your details.");
+      setLoading(false);
+      toast.error(
+        error.message || "Sign in failed. Please check your details.",
+      );
       return;
     }
-    router.push("/");
+
+    const { data } = await authClient.getSession();
+    if (data?.user.isBlocked) {
+      await authClient.signOut();
+      setLoading(false);
+      toast.error("Your account has been blocked. Please contact support.");
+      return;
+    }
+
+    setLoading(false);
+    toast.success("Welcome back!");
+    router.push("/dashboard");
     router.refresh();
   };
 
@@ -43,25 +60,25 @@ export default function LoginForm() {
       <form onSubmit={handleSubmit} className="space-y-4">
         <div className="relative">
           <Mail className="absolute left-4 top-1/2 size-5 -translate-y-1/2 text-mocha" />
-          <input
+          <Input
             type="email"
             required
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="Email address"
-            className="w-full rounded-full border border-sand bg-ivory py-3.5 pl-12 pr-4 text-espresso outline-none transition placeholder:text-mocha/70 focus:border-caramel focus:ring-4 focus:ring-caramel/20"
+            className={inputClass}
           />
         </div>
 
         <div className="relative">
           <Lock className="absolute left-4 top-1/2 size-5 -translate-y-1/2 text-mocha" />
-          <input
+          <Input
             type={show ? "text" : "password"}
             required
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             placeholder="Password"
-            className="w-full rounded-full border border-sand bg-ivory py-3.5 pl-12 pr-12 text-espresso outline-none transition placeholder:text-mocha/70 focus:border-caramel focus:ring-4 focus:ring-caramel/20"
+            className={`${inputClass} pr-12`}
           />
           <button
             type="button"
@@ -73,20 +90,14 @@ export default function LoginForm() {
           </button>
         </div>
 
-        {error && (
-          <p className="rounded-2xl bg-red-50 px-4 py-3 text-sm not-italic text-red-700">
-            {error}
-          </p>
-        )}
-
-        <button
+        <Button
           type="submit"
           disabled={loading}
-          className="flex w-full items-center justify-center gap-2 rounded-full bg-espresso py-3.5 font-medium text-ivory shadow-lg shadow-espresso/20 transition hover:bg-cocoa disabled:opacity-70"
+          className="h-12 w-full rounded-full bg-espresso text-base text-ivory shadow-lg shadow-espresso/20 hover:bg-cocoa"
         >
           {loading && <Loader2 className="size-5 animate-spin" />}
-          Login
-        </button>
+          Sign In
+        </Button>
       </form>
     </div>
   );

@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import { Playfair_Display, Lora } from "next/font/google";
-import "./globals.css";
+import { Toaster } from "@/components/ui/sonner";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import "./globals.css";
 
 const playfair = Playfair_Display({
   subsets: ["latin"],
@@ -33,6 +34,7 @@ export default function RootLayout({
         <Navbar />
         <main>{children}</main>
         <Footer />
+        <Toaster position="top-center" richColors />
       </body>
     </html>
   );
