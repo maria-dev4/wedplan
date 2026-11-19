@@ -21,3 +21,12 @@ export async function apiFetch(path: string, options: RequestInit = {}) {
   }
   return result;
 }
+export async function publicFetch(path: string) {
+  const res = await fetch(`${baseUrl}${path}`);
+  const result = await res.json().catch(() => ({}));
+
+  if (!res.ok) {
+    throw new Error(result.message || "Something went wrong");
+  }
+  return result;
+}

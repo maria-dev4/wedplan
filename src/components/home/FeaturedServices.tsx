@@ -1,7 +1,8 @@
 import Link from "next/link";
-import { ArrowRight, MapPin, Star } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import Reveal from "../Reveal";
 import SectionHeading from "../SectionHeading";
+import ServiceGlassCard from "../ServiceGlassCard";
 
 const services = [
   {
@@ -12,6 +13,8 @@ const services = [
     price: 2500,
     rating: 4.9,
     tone: "from-sand to-caramel",
+    image:
+      "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=1200&q=80",
   },
   {
     title: "Cinematic Wedding Shoot",
@@ -21,6 +24,8 @@ const services = [
     price: 800,
     rating: 4.8,
     tone: "from-latte to-mocha",
+    image:
+      "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1200&q=80",
   },
   {
     title: "Signature Feast Catering",
@@ -30,6 +35,8 @@ const services = [
     price: 1200,
     rating: 4.7,
     tone: "from-caramel to-cocoa",
+    image:
+      "https://images.unsplash.com/photo-1555244162-803834f70033?auto=format&fit=crop&w=1200&q=80",
   },
   {
     title: "Floral Dream Stage",
@@ -39,6 +46,8 @@ const services = [
     price: 950,
     rating: 4.9,
     tone: "from-cream to-caramel",
+    image:
+      "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?auto=format&fit=crop&w=1200&q=80",
   },
   {
     title: "Bridal Glow Package",
@@ -48,6 +57,8 @@ const services = [
     price: 450,
     rating: 4.8,
     tone: "from-sand to-mocha",
+    image:
+      "https://images.unsplash.com/photo-1487412912498-0447578fcca8?auto=format&fit=crop&w=1200&q=80",
   },
   {
     title: "Live Band Evening",
@@ -57,6 +68,8 @@ const services = [
     price: 700,
     rating: 4.6,
     tone: "from-latte to-cocoa",
+    image:
+      "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&w=1200&q=80",
   },
 ];
 
@@ -72,39 +85,15 @@ export default function FeaturedServices() {
       <div className="mt-14 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
         {services.map((item, index) => (
           <Reveal key={item.title} delay={(index % 3) * 0.1}>
-            <article className="group overflow-hidden rounded-3xl border border-sand/60 bg-white transition duration-300 hover:-translate-y-2 hover:shadow-[0_30px_60px_rgba(62,46,39,0.14)]">
-              <div className={`relative h-52 bg-linear-to-br ${item.tone}`}>
-                <span className="absolute left-4 top-4 rounded-full bg-ivory/90 px-4 py-1.5 text-xs font-semibold text-cocoa backdrop-blur">
-                  {item.category}
-                </span>
-                <span className="absolute right-4 top-4 flex items-center gap-1 rounded-full bg-espresso/80 px-3 py-1.5 text-xs text-ivory backdrop-blur">
-                  <Star className="size-3.5 fill-current" />
-                  {item.rating}
-                </span>
-              </div>
-              <div className="p-6">
-                <h3 className="text-2xl text-espresso">{item.title}</h3>
-                <p className="mt-1 text-sm text-mocha">by {item.vendor}</p>
-                <p className="mt-3 flex items-center gap-1.5 text-sm text-cocoa">
-                  <MapPin className="size-4 text-caramel" />
-                  {item.location}
-                </p>
-                <div className="mt-6 flex items-center justify-between border-t border-latte pt-5">
-                  <p className="text-sm text-mocha">
-                    From{" "}
-                    <span className="font-(family-name:--font-playfair) text-2xl italic text-espresso">
-                      ${item.price}
-                    </span>
-                  </p>
-                  <Link
-                    href="/services"
-                    className="flex size-11 items-center justify-center rounded-full bg-latte text-cocoa transition group-hover:bg-espresso group-hover:text-ivory"
-                  >
-                    <ArrowRight className="size-5" />
-                  </Link>
-                </div>
-              </div>
-            </article>
+            <ServiceGlassCard
+              serviceName={item.title}
+              vendorName={item.vendor}
+              category={item.category}
+              location={item.location}
+              price={item.price}
+              image={item.image}
+              href="/services"
+            />
           </Reveal>
         ))}
       </div>

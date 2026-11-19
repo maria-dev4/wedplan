@@ -4,7 +4,10 @@ import { authClient } from "@/lib/auth-client";
 
 export default function GoogleButton() {
   const handleGoogle = async () => {
-    await authClient.signIn.social({ provider: "google", callbackURL: "/" });
+    await authClient.signIn.social({
+      provider: "google",
+      callbackURL: "/dashboard",
+    });
   };
 
   return (
