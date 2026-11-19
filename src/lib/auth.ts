@@ -29,12 +29,22 @@ export const auth = betterAuth({
       subscriptionExpiresAt: { type: "date", required: false, input: false },
     },
   },
-  databaseHooks: {
+    databaseHooks: {
     user: {
       create: {
         before: async (user) => {
           const role = user.role === "vendor" ? "vendor" : "customer";
           return { data: { ...user, role } };
+        },
+      },
+      update: {
+        before: async (user) => {
+          const data = { ...user } as Record<string, unknown>;
+          delete data.role;
+          delete data.isBlocked;
+          delete data.subscriptionPlan;
+          delete data.subscriptionExpiresAt;
+          return { data: data as typeof user };
         },
       },
     },
