@@ -1,8 +1,9 @@
+
 "use client";
 
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { ArrowRight, MapPin } from "lucide-react";
+import { ArrowRight, Crown, MapPin } from "lucide-react";
 import { authClient } from "@/lib/auth-client";
 import type { Service } from "@/lib/types";
 
@@ -42,7 +43,19 @@ export default function ServiceCard({ service }: { service: Service }) {
           <span className="flex size-8 shrink-0 items-center justify-center rounded-full bg-latte text-sm font-semibold not-italic text-cocoa">
             {service.vendorName.charAt(0).toUpperCase()}
           </span>
-          <p className="truncate text-sm text-mocha">by {service.vendorName}</p>
+
+          <div className="flex min-w-0 items-center gap-2">
+            <p className="truncate text-sm text-mocha">
+              by {service.vendorName}
+            </p>
+
+            {service.vendorPremium && (
+              <span className="flex shrink-0 items-center gap-1 rounded-full bg-espresso px-2.5 py-0.5 text-[11px] not-italic text-ivory">
+                <Crown className="size-3" />
+                Premium
+              </span>
+            )}
+          </div>
         </div>
 
         <p className="mt-3 flex items-center gap-1.5 text-sm text-cocoa">

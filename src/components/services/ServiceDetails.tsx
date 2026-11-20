@@ -1,10 +1,9 @@
 "use client";
-
+import { ArrowLeft, Crown, Info, MapPin, TriangleAlert } from "lucide-react";
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useParams } from "next/navigation";
-import { ArrowLeft, Info, MapPin, TriangleAlert } from "lucide-react";
 import { authClient } from "@/lib/auth-client";
 import { publicFetch } from "@/lib/api";
 import type { Service } from "@/lib/types";
@@ -164,6 +163,12 @@ export default function ServiceDetails() {
                 <p className="truncate text-lg font-semibold not-italic text-espresso">
                   {service.vendorName}
                 </p>
+                {service.vendorPremium && (
+                  <span className="mt-1 inline-flex items-center gap-1 rounded-full bg-espresso px-3 py-0.5 text-xs not-italic text-ivory">
+                    <Crown className="size-3" />
+                    Premium vendor
+                  </span>
+                )}
                 <p className="truncate text-sm text-mocha">
                   {service.vendorEmail}
                 </p>

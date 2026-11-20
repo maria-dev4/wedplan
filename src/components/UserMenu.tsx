@@ -77,22 +77,18 @@ export default function UserMenu() {
         </div>
 
         <DropdownMenuItem
-          asChild
+          render={<Link href="/dashboard" />}
           className="mt-2 cursor-pointer rounded-2xl px-4 py-3 text-cocoa"
         >
-          <Link href="/dashboard">
-            <LayoutDashboard className="size-5" />
-            Dashboard
-          </Link>
+          <LayoutDashboard className="size-5" />
+          Dashboard
         </DropdownMenuItem>
         <DropdownMenuItem
-          asChild
+          render={<Link href="/dashboard/profile" />}
           className="cursor-pointer rounded-2xl px-4 py-3 text-cocoa"
         >
-          <Link href="/dashboard/profile">
-            <Settings className="size-5" />
-            Profile Settings
-          </Link>
+          <Settings className="size-5" />
+          Profile Settings
         </DropdownMenuItem>
         <DropdownMenuSeparator className="bg-sand/60" />
         <DropdownMenuItem

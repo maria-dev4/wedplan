@@ -1,79 +1,27 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, PackageSearch } from "lucide-react";
+import { publicFetch } from "@/lib/api";
+import type { Service } from "@/lib/types";
+import { Skeleton } from "@/components/ui/skeleton";
 import Reveal from "../Reveal";
 import SectionHeading from "../SectionHeading";
-import ServiceGlassCard from "../ServiceGlassCard";
-
-const services = [
-  {
-    title: "Royal Garden Venue",
-    category: "Venue",
-    vendor: "Grand Palace Events",
-    location: "Dhaka",
-    price: 2500,
-    rating: 4.9,
-    tone: "from-sand to-caramel",
-    image:
-      "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=1200&q=80",
-  },
-  {
-    title: "Cinematic Wedding Shoot",
-    category: "Photography",
-    vendor: "Lens & Light Studio",
-    location: "Cumilla",
-    price: 800,
-    rating: 4.8,
-    tone: "from-latte to-mocha",
-    image:
-      "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1200&q=80",
-  },
-  {
-    title: "Signature Feast Catering",
-    category: "Catering",
-    vendor: "Spice Route Kitchen",
-    location: "Chattogram",
-    price: 1200,
-    rating: 4.7,
-    tone: "from-caramel to-cocoa",
-    image:
-      "https://images.unsplash.com/photo-1555244162-803834f70033?auto=format&fit=crop&w=1200&q=80",
-  },
-  {
-    title: "Floral Dream Stage",
-    category: "Decoration",
-    vendor: "Petal & Pearl",
-    location: "Dhaka",
-    price: 950,
-    rating: 4.9,
-    tone: "from-cream to-caramel",
-    image:
-      "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?auto=format&fit=crop&w=1200&q=80",
-  },
-  {
-    title: "Bridal Glow Package",
-    category: "Makeup",
-    vendor: "Aura Beauty Lounge",
-    location: "Cumilla",
-    price: 450,
-    rating: 4.8,
-    tone: "from-sand to-mocha",
-    image:
-      "https://images.unsplash.com/photo-1487412912498-0447578fcca8?auto=format&fit=crop&w=1200&q=80",
-  },
-  {
-    title: "Live Band Evening",
-    category: "Music",
-    vendor: "Sundown Sessions",
-    location: "Sylhet",
-    price: 700,
-    rating: 4.6,
-    tone: "from-latte to-cocoa",
-    image:
-      "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&w=1200&q=80",
-  },
-];
+import ServiceCard from "../ServiceCard";
 
 export default function FeaturedServices() {
+  const [services, setServices] = useState<Service[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+    publicFetch("/api/services/featured")
+      .then((data) => setServices(data.services))
+      .catch((err) => setError(err.message))
+      .finally(() => setLoading(false));
+  }, []);
+
   return (
     <section className="mx-auto max-w-7xl px-5 py-24 md:px-8">
       <SectionHeading
@@ -82,26 +30,51 @@ export default function FeaturedServices() {
         text="Hand-picked favourites from our most loved vendors."
       />
 
-      <div className="mt-14 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-        {services.map((item, index) => (
-          <Reveal key={item.title} delay={(index % 3) * 0.1}>
-            <ServiceGlassCard
-              serviceName={item.title}
-              vendorName={item.vendor}
-              category={item.category}
-              location={item.location}
-              price={item.price}
-              image={item.image}
-              href="/services"
+      {loading && (
+        <div className="mt-14 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+          {Array.from({ length: 6 }).map((_, index) => (
+            <Skeleton
+              key={index}
+              className="h-96 w-full rounded-3xl bg-latte"
             />
-          </Reveal>
-        ))}
-      </div>
+          ))}
+        </div>
+      )}
+
+      {!loading && error && (
+        <div className="mt-14 rounded-3xl border border-sand/60 bg-white p-12 text-center">
+          <p className="not-italic text-espresso">{error}</p>
+        </div>
+      )}
+
+      {!loading && !error && services.length === 0 && (
+        <div className="mt-14 rounded-3xl border border-dashed border-sand bg-white/60 p-14 text-center">
+          <span className="mx-auto flex size-16 items-center justify-center rounded-full bg-latte text-cocoa">
+            <PackageSearch className="size-8" />
+          </span>
+          <h3 className="mt-5 text-3xl text-espresso">
+            Services are coming soon
+          </h3>
+          <p className="mt-2 text-mocha">
+            Our vendors are preparing something beautiful. Check back shortly.
+          </p>
+        </div>
+      )}
+
+      {!loading && !error && services.length > 0 && (
+        <div className="mt-14 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+          {services.map((service, index) => (
+            <Reveal key={service._id} delay={(index % 3) * 0.1}>
+              <ServiceCard service={service} />
+            </Reveal>
+          ))}
+        </div>
+      )}
 
       <Reveal className="mt-14 text-center">
         <Link
           href="/services"
-          className="inline-flex items-center gap-2 rounded-full border border-espresso px-8 py-3.5 font-medium text-espresso transition hover:bg-espresso hover:text-ivory"
+          className="inline-flex items-center gap-2 rounded-full border border-espresso px-8 py-3.5 font-medium not-italic text-espresso transition hover:bg-espresso hover:text-ivory"
         >
           View all services
           <ArrowRight className="size-4" />

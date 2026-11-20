@@ -9,11 +9,10 @@ const socials = [
 
 const quickLinks = [
   { href: "/", label: "Home" },
-  { href: "/services", label: "Services" },
-  { href: "/about", label: "About Us" },
-  { href: "/contact", label: "Contact" },
+  { href: "/services", label: "Browse Services" },
+  { href: "/login", label: "Sign In" },
+  { href: "/register", label: "Sign Up" },
 ];
-
 const vendorLinks = [
   { href: "/register", label: "Become a Vendor" },
   { href: "/login", label: "Vendor Login" },
@@ -87,11 +86,21 @@ export default function Footer() {
             </li>
             <li className="flex items-start gap-3">
               <Mail className="mt-0.5 size-5 shrink-0 text-caramel" />
-              <span>hello@wedplan.com</span>
+              <a
+                href="mailto:hello@wedplan.com"
+                className="transition hover:text-ivory"
+              >
+                hello@wedplan.com
+              </a>
             </li>
             <li className="flex items-start gap-3">
               <Phone className="mt-0.5 size-5 shrink-0 text-caramel" />
-              <span>+880 1700 000000</span>
+              <a
+                href="tel:+8801700000000"
+                className="transition hover:text-ivory"
+              >
+                +880 171 23456789
+              </a>
             </li>
           </ul>
         </div>

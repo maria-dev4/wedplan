@@ -31,8 +31,8 @@ export default function WhyUs() {
       <div className="mx-auto max-w-7xl px-5 md:px-8">
         <SectionHeading
           light
-          eyebrow="Why WedPlan"
-          title="Made for couples who deserve calm"
+          eyebrow="Why choose us"
+          title="Why choose WedPlan?"
           text="We take care of the details so you can enjoy the journey."
         />
 
