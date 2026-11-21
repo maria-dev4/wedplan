@@ -3,7 +3,7 @@ import MyBookingsView from "@/components/dashboard/customer/MyBookingsView";
 
 export default function MyBookingsPage() {
   return (
-    <RoleGuard roles={["customer"]}>
+    <RoleGuard roles={["customer", "vendor"]}>
       <MyBookingsView />
     </RoleGuard>
   );

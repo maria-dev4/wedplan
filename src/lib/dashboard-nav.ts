@@ -18,11 +18,12 @@ const overview: NavItem = { href: "/dashboard", label: "Overview", icon: LayoutD
 const profile: NavItem = { href: "/dashboard/profile", label: "Profile Settings", icon: Settings };
 
 export const navByRole: Record<string, NavItem[]> = {
-  vendor: [
+    vendor: [
     overview,
     { href: "/dashboard/my-services", label: "My Services", icon: Package },
     { href: "/dashboard/add-service", label: "Add Service", icon: CirclePlus },
     { href: "/dashboard/booking-requests", label: "Booking Requests", icon: Inbox },
+    { href: "/dashboard/my-bookings", label: "My Bookings", icon: CalendarCheck },
     { href: "/dashboard/subscription", label: "Subscription", icon: Crown },
     profile,
   ],

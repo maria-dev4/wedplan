@@ -8,9 +8,7 @@ import { Heart, Menu, X } from "lucide-react";
 
 const links = [
   { href: "/", label: "Home" },
-  { href: "/services", label: "Services" },
-  { href: "/about", label: "About" },
-  { href: "/contact", label: "Contact" },
+  { href: "/services", label: "Browse Services" },
 ];
 
 export default function Navbar() {
@@ -25,10 +23,6 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  useEffect(() => {
-    setOpen(false);
-  }, [pathname]);
-
   return (
     <header
       className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
@@ -38,7 +32,11 @@ export default function Navbar() {
       }`}
     >
       <nav className="mx-auto flex max-w-7xl items-center justify-between px-5 md:px-8">
-        <Link href="/" className="flex items-center gap-2.5">
+        <Link
+          href="/"
+          onClick={() => setOpen(false)}
+          className="flex items-center gap-2.5"
+        >
           <span className="flex size-10 items-center justify-center rounded-full bg-linear-to-br from-cocoa to-espresso text-ivory shadow-lg">
             <Heart className="size-5 fill-current" />
           </span>
@@ -54,6 +52,7 @@ export default function Navbar() {
               <li key={link.href}>
                 <Link
                   href={link.href}
+                  onClick={() => setOpen(false)}
                   className={`relative rounded-full px-5 py-2 text-[15px] font-medium transition-colors ${
                     active
                       ? "bg-latte text-espresso"
@@ -94,6 +93,7 @@ export default function Navbar() {
                 <li key={link.href}>
                   <Link
                     href={link.href}
+                    onClick={() => setOpen(false)}
                     className={`block rounded-2xl px-4 py-3 font-medium ${
                       pathname === link.href
                         ? "bg-latte text-espresso"
