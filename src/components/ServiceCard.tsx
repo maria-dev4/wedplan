@@ -36,13 +36,7 @@ export default function ServiceCard({ service }: { service: Service }) {
   };
 
   return (
-    <article
-      role="link"
-      tabIndex={0}
-      onClick={handleClick}
-      onKeyDown={handleKeyDown}
-      className="group relative block overflow-hidden rounded-[2rem] border border-sand/60 bg-white h-[26rem] transition duration-300 hover:-translate-y-2 hover:shadow-[0_30px_60px_rgba(62,46,39,0.14)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-caramel"
-    >
+    <div className="group relative block overflow-hidden rounded-[2rem] border border-sand/60 bg-white h-[26rem] transition duration-300 hover:-translate-y-2 hover:shadow-[0_30px_60px_rgba(62,46,39,0.14)]">
       <div className="relative h-full overflow-hidden">
         {service.images[0] ? (
           <Image
@@ -112,12 +106,16 @@ export default function ServiceCard({ service }: { service: Service }) {
           <span className="inline-flex items-center rounded-full bg-white/20 backdrop-blur h-10 px-4 text-sm font-(family-name:--font-playfair) italic text-ivory w-fit">
             ${service.price}
           </span>
-          <span className="group inline-flex items-center gap-2 rounded-full bg-white/18 border border-white/35 backdrop-blur-[12px] h-10 px-4 font-medium not-italic text-ivory hover:bg-white/25 transition-colors shadow-sm">
+          <button
+            onClick={handleClick}
+            onKeyDown={handleKeyDown}
+            className="group inline-flex items-center gap-2 rounded-full bg-white/18 border border-white/35 backdrop-blur-[12px] h-10 px-4 font-medium not-italic text-ivory hover:bg-white/25 transition-colors shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-caramel"
+          >
             View Details
             <ArrowRight className="size-4 transition-transform duration-300 group-hover:translate-x-[3px]" />
-          </span>
+          </button>
         </div>
       </div>
-    </article>
+    </div>
   );
 }

@@ -22,7 +22,7 @@ export default function Hero() {
         sizes="100vw"
         className="object-cover"
       />
-      <div className="absolute inset-0 bg-linear-to-r from-ivory via-ivory/50 to-ivory/10" />
+      <div className="absolute inset-0 bg-linear-to-r from-ivory via-ivory/60 to-ivory/10" />
       <div className="absolute inset-x-0 bottom-0 h-40 bg-linear-to-t from-ivory to-transparent" />
 
       <div className="relative mx-auto w-full max-w-6xl px-6 md:px-10">
