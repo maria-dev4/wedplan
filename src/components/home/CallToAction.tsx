@@ -4,7 +4,7 @@ import Reveal from "../Reveal";
 
 export default function CallToAction() {
   return (
-    <section className="mx-auto max-w-7xl px-5 pb-24 md:px-8">
+    <section className="mx-auto max-w-6xl px-6 pb-24 md:px-10">
       <Reveal>
         <div className="relative overflow-hidden rounded-[2.5rem] bg-linear-to-br from-cocoa via-espresso to-espresso px-8 py-16 text-center md:px-16 md:py-20">
           <div className="pointer-events-none absolute -right-20 -top-20 size-80 rounded-full bg-caramel/20 blur-3xl" />

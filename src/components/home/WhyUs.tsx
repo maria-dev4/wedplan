@@ -28,7 +28,7 @@ const features = [
 export default function WhyUs() {
   return (
     <section className="bg-espresso py-24">
-      <div className="mx-auto max-w-7xl px-5 md:px-8">
+      <div className="mx-auto max-w-6xl px-6 md:px-10">
         <SectionHeading
           light
           eyebrow="Why choose us"

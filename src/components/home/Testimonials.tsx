@@ -22,7 +22,7 @@ const reviews = [
 
 export default function Testimonials() {
   return (
-    <section className="mx-auto max-w-7xl px-5 py-24 md:px-8">
+    <section className="mx-auto max-w-6xl px-6 py-24 md:px-10">
       <SectionHeading
         eyebrow="Love notes"
         title="Stories from happy couples"

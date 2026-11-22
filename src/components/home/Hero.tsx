@@ -25,7 +25,7 @@ export default function Hero() {
       <div className="absolute inset-0 bg-linear-to-r from-ivory via-ivory/90 to-ivory/25" />
       <div className="absolute inset-x-0 bottom-0 h-40 bg-linear-to-t from-ivory to-transparent" />
 
-      <div className="relative mx-auto w-full max-w-7xl px-5 md:px-8">
+      <div className="relative mx-auto w-full max-w-6xl px-6 md:px-10">
         <div className="max-w-2xl">
           <motion.span
             initial={{ opacity: 0, y: 16 }}

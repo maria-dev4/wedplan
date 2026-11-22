@@ -108,7 +108,7 @@ export default function ServicesBrowser() {
       <div className="pointer-events-none absolute -left-28 top-16 size-96 rounded-full bg-sand/40 blur-3xl" />
       <div className="pointer-events-none absolute -right-24 top-60 size-96 rounded-full bg-caramel/20 blur-3xl" />
 
-      <div className="relative mx-auto max-w-7xl px-5 md:px-8">
+      <div className="relative mx-auto max-w-6xl px-6 md:px-10">
         <div className="mx-auto max-w-2xl text-center">
           <span className="inline-block rounded-full bg-latte px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.2em] not-italic text-cocoa">
             Browse Services
@@ -197,9 +197,9 @@ export default function ServicesBrowser() {
             {Array.from({ length: 6 }).map((_, index) => (
               <div
                 key={index}
-                className="overflow-hidden rounded-3xl border border-sand/60 bg-white"
+                className="overflow-hidden rounded-[2rem] border border-sand/60 bg-white h-[26rem]"
               >
-                <Skeleton className="h-56 w-full rounded-none bg-latte" />
+                <Skeleton className="h-full w-full rounded-none bg-latte" />
                 <div className="space-y-3 p-6">
                   <Skeleton className="h-6 w-3/4 bg-latte" />
                   <Skeleton className="h-4 w-1/2 bg-latte" />

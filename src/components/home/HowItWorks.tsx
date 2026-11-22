@@ -23,7 +23,7 @@ const steps = [
 export default function HowItWorks() {
   return (
     <section className="bg-cream py-24">
-      <div className="mx-auto max-w-7xl px-5 md:px-8">
+      <div className="mx-auto max-w-6xl px-6 md:px-10">
         <SectionHeading
           eyebrow="How it works"
           title="Three simple steps to your perfect day"
