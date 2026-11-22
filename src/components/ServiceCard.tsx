@@ -112,7 +112,7 @@ export default function ServiceCard({ service }: { service: Service }) {
           <span className="inline-flex items-center rounded-full bg-white/20 backdrop-blur h-10 px-4 text-sm font-(family-name:--font-playfair) italic text-ivory w-fit">
             ${service.price}
           </span>
-          <span className="group inline-flex items-center gap-2 rounded-full bg-ivory h-10 px-4 font-medium not-italic text-espresso hover:bg-latte transition-colors">
+          <span className="group inline-flex items-center gap-2 rounded-full bg-white/18 border border-white/35 backdrop-blur-[12px] h-10 px-4 font-medium not-italic text-ivory hover:bg-white/25 transition-colors shadow-sm">
             View Details
             <ArrowRight className="size-4 transition-transform duration-300 group-hover:translate-x-[3px]" />
           </span>
