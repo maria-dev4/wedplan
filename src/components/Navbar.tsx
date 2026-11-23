@@ -28,7 +28,7 @@ export default function Navbar() {
       className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
         scrolled
           ? "border-b border-sand/50 bg-ivory/80 py-3 shadow-[0_8px_30px_rgba(62,46,39,0.08)] backdrop-blur-xl"
-          : "bg-transparent py-5"
+          : "bg-linear-to-b from-ivory/95 via-ivory/70 to-transparent py-5"
       }`}
     >
       <nav className="mx-auto flex max-w-7xl items-center justify-between px-5 md:px-8">
@@ -56,7 +56,7 @@ export default function Navbar() {
                   className={`relative rounded-full px-5 py-2 text-[15px] font-medium transition-colors ${
                     active
                       ? "bg-latte text-espresso"
-                      : "text-cocoa hover:bg-cream hover:text-espresso"
+                      : "text-espresso hover:bg-cream hover:text-espresso"
                   }`}
                 >
                   {link.label}
