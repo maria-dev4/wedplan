@@ -10,6 +10,21 @@ const db = client.db(process.env.DB_NAME);
 export const auth = betterAuth({
     database: mongodbAdapter(db, { client }),
   plugins: [jwt()],
+    advanced: {
+    ipAddress: {
+      ipAddressHeaders: ["x-real-ip", "x-forwarded-for"],
+    },
+  },
+  rateLimit: {
+    enabled: true,
+    window: 10,
+    max: 100,
+    customRules: {
+      "/sign-in/email": { window: 60, max: 20 },
+      "/sign-in/social": { window: 60, max: 20 },
+      "/sign-up/email": { window: 60, max: 20 },
+    },
+  },
         hooks: {
     before: createAuthMiddleware(async (ctx) => {
       if (ctx.path !== "/sign-up/email") return;
